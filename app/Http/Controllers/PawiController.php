@@ -86,7 +86,27 @@ class PawiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Validate the request
+        $validated = $request->validate([
+            'is_anonymous' => 'required|boolean',
+            'visibility' => 'required|in:public,private',
+            'content' => 'required|string',
+            'is_letgo' => 'required|boolean',
+        ]);
+
+        Pawi::create([
+            'is_anonymous' => $validated['is_anonymous'],
+            'visibility' => $validated['visibility'],
+            'content' => $validated['content'],
+            'is_letgo' => $validated['is_letgo'],
+        ]);
+
+
+        if ($validated['is_letgo']) {
+            return redirect('/home')->with(['success' => "You've let this go.\nThis post will gently disappear after 5 minutes.", 'icon' => 'letgo']);
+        }
+        
+        return redirect('/home')->with(['success'=>'Your thoughts have been shared.', 'icon'=>'share']);
     }
 
     /**

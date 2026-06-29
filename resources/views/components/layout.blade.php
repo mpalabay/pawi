@@ -4,14 +4,12 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <title>{{ config('app.name', 'Pawi') }}</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
-		{{-- <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
-		<link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css" rel="stylesheet" type="text/css" /> --}}
-
+		<script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
         <!-- Styles / Scripts -->
         @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
             @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -21,8 +19,7 @@
             </style>
         @endif
     </head>
-    {{-- <body class="bg-[#FDFDFC] dark:bg-[#0a0a0a] text-[#1b1b18] flex p-6 lg:p-8 items-center lg:justify-center min-h-screen flex-col"> --}}
-    <body class="min-h-screen flex flex-col bg-gray-100 lg:items-center">
+    <body class="min-h-screen flex flex-col bg-[#F7F9F8] lg:items-center">
         <header class="not-has-[nav]:hidden w-full py-4 px-2 bg-white shadow-2xs sticky top-0 z-1">
 				<nav class="flex justify-between">
 					<div>
@@ -56,6 +53,23 @@
 					</div>
 				</nav>
         </header>
+
+		<!-- Success Toast -->
+		@if (session('success'))
+			<div 
+				x-data="{ show: true }"
+				x-show="show"
+				x-transition
+				x-init="setTimeout(() => show = false, 3000)"
+				class="toast toast-top toast-right z-10 top-20">
+				<div role="alert" class="alert bg-[#c8ffe7] shadow-none  flex flex-row gap-2">
+					@if (session('icon') === 'share') <span class="text-xl">💭</span> @endif
+					@if (session('icon') === 'letgo') <span class="text-xl text-white">🍃</span> @endif
+					<span>{!! nl2br(e(session('success'))) !!}</span>
+				</div>
+			</div>
+		@endif
+		
 		<main class="w-full lg:max-w-2xl mt-6">
 			{{ $slot }}
 		</main>
