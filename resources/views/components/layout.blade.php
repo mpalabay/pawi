@@ -4,7 +4,13 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>{{ config('app.name', 'Pawi') }}</title>
+		<title>{{ isset($title) ? $title . ' - Pawi' : 'Pawi' }}</title>
+
+		<link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="shortcut icon" href="/favicon.ico" />
+		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+		<link rel="manifest" href="/site.webmanifest" />
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -23,9 +29,10 @@
         <header class="not-has-[nav]:hidden w-full py-4 px-2 bg-white shadow-2xs sticky top-0 z-1">
 				<nav class="flex justify-between">
 					<div>
-						<a href="{{ url('/dashboard') }}"
-							class="inline-block px-5 py-1.5 dark:text-[#EDEDEC] border-[#19140035] hover:border-[#1915014a] border text-[#1b1b18] dark:border-[#3E3E3A] dark:hover:border-[#62605b] rounded-sm text-sm leading-normal">
-							🐢 Pawi
+						<a href="{{ url('/home') }}"
+							class="flex flex-row gap-1 px-2">
+							<img src="{{ asset('favicon.svg') }}" class="w-8 h-8" alt="Logo">
+							<span class="font-bold text-2xl translate-y-2 text-[color:var(--text)]">Pawi</span>
 						</a>
 					</div>
 					<div>
@@ -41,13 +48,13 @@
 							href="/signin"
 							class="inline-block px-5 py-1.5 dark:text-[#EDEDEC] text-[#1b1b18] border border-transparent hover:border-[#19140035] dark:hover:border-[#3E3E3A] rounded-sm text-sm leading-normal"
 						>
-							Log in
+							Sign in
 						</a>
 
 							<a
 								href="/signup"
 								class="inline-block px-5 py-1.5 dark:text-[#EDEDEC] border-[#19140035] hover:border-[#1915014a] border text-[#1b1b18] dark:border-[#3E3E3A] dark:hover:border-[#62605b] rounded-sm text-sm leading-normal">
-								Register
+								Sign up
 							</a>
 					@endauth
 					</div>
