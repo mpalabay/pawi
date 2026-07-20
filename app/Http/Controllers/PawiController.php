@@ -5,16 +5,18 @@ namespace App\Http\Controllers;
 use App\Models\Pawi;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class PawiController extends Controller
 {
+    use AuthorizesRequests;
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         
-        $pawis = [
+        $pawiss = [
 
             [
                 'author' => 'Juan Dela Cruz',
@@ -69,6 +71,8 @@ class PawiController extends Controller
             ],
         ];
 
+        $pawis = Pawi::with('user')->where('visibility', 'public')->latest()->take(50)->get();
+
 
         return view('home', ['pawis' => $pawis]);
     }
@@ -86,6 +90,7 @@ class PawiController extends Controller
      */
     public function store(Request $request)
     {
+       
         // Validate the request
         $validated = $request->validate([
             'is_anonymous' => 'required|boolean',
@@ -93,13 +98,15 @@ class PawiController extends Controller
             'content' => 'required|string',
             'is_letgo' => 'required|boolean',
         ]);
+        
+        auth()->user()->pawis()->create($validated);
 
-        Pawi::create([
-            'is_anonymous' => $validated['is_anonymous'],
-            'visibility' => $validated['visibility'],
-            'content' => $validated['content'],
-            'is_letgo' => $validated['is_letgo'],
-        ]);
+        // Pawi::create([
+        //     'is_anonymous' => $validated['is_anonymous'],
+        //     'visibility' => $validated['visibility'],
+        //     'content' => $validated['content'],
+        //     'is_letgo' => $validated['is_letgo'],
+        // ]);
 
 
         if ($validated['is_letgo']) {
@@ -122,7 +129,8 @@ class PawiController extends Controller
      */
     public function edit(Pawi $pawi)
     {
-        //
+        
+        return response()->json($pawi->load('user'));
     }
 
     /**
@@ -131,6 +139,18 @@ class PawiController extends Controller
     public function update(Request $request, Pawi $pawi)
     {
         //
+         $this->authorize('update', $pawi);
+
+        $validated = $request->validate([
+            'is_anonymous' => 'required|boolean',
+            'visibility' => 'required|in:public,private',
+            'content' => 'required|string',
+            'is_letgo' => 'required|boolean',
+        ]);
+
+        $pawi->update($validated);
+
+        return redirect()->back()->with('success', 'Your thoughts have been updated.');
     }
 
     /**
@@ -138,6 +158,9 @@ class PawiController extends Controller
      */
     public function destroy(Pawi $pawi)
     {
-        //
+        $pawi->delete();
+
+        return redirect()->back()->with('success', 'Your thoughts have been moved to trash.');
     }
+    
 }

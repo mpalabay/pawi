@@ -11,11 +11,9 @@
 		<link rel="shortcut icon" href="/favicon.ico" />
 		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 		<link rel="manifest" href="/site.webmanifest" />
-
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
-		<script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
         <!-- Styles / Scripts -->
         @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
             @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -26,58 +24,14 @@
         @endif
     </head>
     <body class="min-h-screen flex flex-col bg-[#F7F9F8] lg:items-center">
-        <header class="not-has-[nav]:hidden w-full py-4 px-2 bg-white shadow-2xs sticky top-0 z-1">
-				<nav class="flex justify-between">
-					<div>
-						<a href="{{ url('/home') }}"
-							class="flex flex-row gap-1 px-2">
-							<img src="{{ asset('favicon.svg') }}" class="w-8 h-8" alt="Logo">
-							<span class="font-bold text-2xl translate-y-2 text-[color:var(--text)]">Pawi</span>
-						</a>
-					</div>
-					<div>
-					@auth
-						<a
-							href="{{ url('/dashboard') }}"
-							class="inline-block px-5 py-1.5 dark:text-[#EDEDEC] border-[#19140035] hover:border-[#1915014a] border text-[#1b1b18] dark:border-[#3E3E3A] dark:hover:border-[#62605b] rounded-sm text-sm leading-normal"
-						>
-							Dashboard
-						</a>
-					@else
-						<a
-							href="/signin"
-							class="inline-block px-5 py-1.5 dark:text-[#EDEDEC] text-[#1b1b18] border border-transparent hover:border-[#19140035] dark:hover:border-[#3E3E3A] rounded-sm text-sm leading-normal"
-						>
-							Sign in
-						</a>
-
-							<a
-								href="/signup"
-								class="inline-block px-5 py-1.5 dark:text-[#EDEDEC] border-[#19140035] hover:border-[#1915014a] border text-[#1b1b18] dark:border-[#3E3E3A] dark:hover:border-[#62605b] rounded-sm text-sm leading-normal">
-								Sign up
-							</a>
-					@endauth
-					</div>
-				</nav>
-        </header>
+        <x-header/>
 
 		<!-- Success Toast -->
 		@if (session('success'))
-			<div 
-				x-data="{ show: true }"
-				x-show="show"
-				x-transition
-				x-init="setTimeout(() => show = false, 3000)"
-				class="toast toast-top toast-right z-10 top-20">
-				<div role="alert" class="alert bg-[#c8ffe7] shadow-none  flex flex-row gap-2">
-					@if (session('icon') === 'share') <span class="text-xl">💭</span> @endif
-					@if (session('icon') === 'letgo') <span class="text-xl text-white">🍃</span> @endif
-					<span>{!! nl2br(e(session('success'))) !!}</span>
-				</div>
-			</div>
+			<x-toast/>
 		@endif
 		
-		<main class="w-full lg:max-w-2xl mt-6">
+		<main class="w-full lg:max-w-2xl mt-6 mb-6">
 			{{ $slot }}
 		</main>
     </body>

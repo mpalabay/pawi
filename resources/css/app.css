@@ -51,3 +51,7 @@
 .animate-slide-x {
     animation: slide-x 60s ease-in-out infinite;
 }
+
+/* [x-cloak] {
+    display: none !important;
+} */
