@@ -5,7 +5,53 @@
 @source '../**/*.blade.php';
 @source '../**/*.js';
 
+@plugin "daisyui";
+
 @theme {
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
+
+:root {
+    --primary: #6BAF92;
+    --secondary: #7FA7C9;
+    --background: #F7F9F8;
+    --text: #2F3E3E;
+    --letgo: #B8A9D9;
+    --private: #A7B3C2;
+    --card: #F2F7F5;
+}
+
+@keyframes slide-x {
+    0% {
+        transform: translateX(0) scaleX(1);
+    }
+
+    /* Move left */
+    49% {
+        transform: translateX(-220%) scaleX(1);
+    }
+
+    /* INSTANT flip here */
+    50% {
+        transform: translateX(-220%) scaleX(-1);
+    }
+
+    /* Move back */
+    99% {
+        transform: translateX(0) scaleX(-1);
+    }
+
+    /* INSTANT flip back */
+    100% {
+        transform: translateX(0) scaleX(1);
+    }
+}
+
+.animate-slide-x {
+    animation: slide-x 60s ease-in-out infinite;
+}
+
+/* [x-cloak] {
+    display: none !important;
+} */
