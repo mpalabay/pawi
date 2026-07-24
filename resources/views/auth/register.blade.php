@@ -23,6 +23,19 @@
                                 </div>
                             @enderror
                         </div>
+                        {{-- Username --}}
+                        <div class="mb-4">
+                            <label class="floating-label">
+                                <input type="text" name="username" placeholder="username" value="{{ old('username') }}"
+                                    class="input outline-none input-bordered w-full @error('name') input-error @enderror" required>
+                                <span>Username</span>
+                            </label>
+                            @error('username')
+                                <div class="label">
+                                    <span class="label-text-alt text-error">{{ $message }}</span>
+                                </div>
+                            @enderror
+                        </div>
 
                         {{-- Email --}}
                         <div class="mb-4">
