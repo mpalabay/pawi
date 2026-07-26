@@ -71,7 +71,7 @@ class PawiController extends Controller
             ],
         ];
 
-        $pawis = Pawi::with('user')->where('visibility', 'public')->latest()->take(50)->get();
+        $pawis = Pawi::with('user')->where('visibility', 'public')->whereNull('archived_at')->latest()->take(50)->get();
 
 
         return view('home', ['pawis' => $pawis]);
@@ -153,14 +153,29 @@ class PawiController extends Controller
         return redirect()->back()->with('success', 'Your thoughts have been updated.');
     }
 
+    public function archive(Request $request, Pawi $pawi)
+    {
+        //
+        $this->authorize('update', $pawi);
+        $pawi->timestamps = false;
+
+        $pawi->update(['archived_at' => now(),]);
+
+        $pawi->timestamps = true;
+
+        return redirect()->back()->with(['success' => 'Thought archived.', 'icon' => 'archive']);
+    }
+
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Pawi $pawi)
     {
+        $this->authorize('delete', $pawi);
+        $pawi->timestamps = false;
         $pawi->delete();
-
-        return redirect()->back()->with('success', 'Your thoughts have been moved to trash.');
+        $pawi->timestamps = false;
+        return redirect()->back()->with(['success' => 'Thought moved to Trash.', 'icon' => 'trash']);
     }
     
 }

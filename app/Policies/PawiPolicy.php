@@ -45,7 +45,7 @@ class PawiPolicy
      */
     public function delete(User $user, Pawi $pawi): bool
     {
-        return false;
+        return $pawi->user()->is($user);
     }
 
     /**

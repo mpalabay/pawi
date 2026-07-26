@@ -19,7 +19,9 @@ return new class extends Migration
             $table->text('content');
             $table->boolean('is_letgo');
             $table->unsignedInteger('letgo_duration')->default(300);
+            $table->timestamp('archived_at')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

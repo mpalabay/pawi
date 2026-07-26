@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\Login;
 use App\Http\Controllers\Auth\Logout;
 use App\Http\Controllers\Auth\Register;
 use App\Http\Controllers\PawiController;
+use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -20,6 +21,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/pawis', [PawiController::class, 'store']);
     Route::get('/pawis/{pawi}/edit', [PawiController::class, 'edit']);
     Route::put('/pawis/{pawi}', [PawiController::class, 'update']);
+    Route::patch('/pawis/{pawi}', [PawiController::class, 'archive']);
     Route::delete('/pawis/{pawi}', [PawiController::class, 'destroy']);
 
     Route::post('/logout', Logout::class);

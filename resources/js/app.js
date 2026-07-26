@@ -41,11 +41,14 @@ Alpine.data('postManager', () => ({
             console.error(error);
         }
     },
+    moveToArchive(id) {
+        this.form.id = id;
+
+        move_to_archive.showModal();
+    },
 
     moveToTrash(id){
         this.form.id = id;
-
-        console.log(this.form.id);
         
         move_to_trash.showModal();
     }

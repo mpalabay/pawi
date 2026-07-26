@@ -1,12 +1,12 @@
 @props(['pawi'])
 
-<div class="p-6 rounded  shadow bg-white relative">
+<div class="p-6 rounded bg-white relative">
     <div class="dropdown dropdown-bottom dropdown-end lg:dropdown-start absolute top-2 right-5">
         <button tabindex="0" role="button" class="cursor-pointer">•••</button>
         <ul tabindex="-1" class="dropdown-content menu bg-base-100 rounded-tr-none lg:rounded-tr-box lg:rounded-tl-none rounded-box z-50 w-52 p-2 shadow-sm">
              @can('update', $pawi)
              <li><a @click='editPost({{ $pawi->id }})'>Edit thought</a></li>
-             <li><a>Move to archive</a></li>
+             <li><a @click='moveToArchive({{ $pawi->id }})'>Move to archive</a></li>
              <li><a @click='moveToTrash({{ $pawi->id }})'>Move to trash</a></li>
              @endcan
             <li><a>Report</a></li>

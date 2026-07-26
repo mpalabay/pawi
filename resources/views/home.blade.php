@@ -75,5 +75,48 @@
                 <button>close</button>
             </form>
         </dialog>
+
+        <dialog id="move_to_archive" class="modal">
+            <div class="modal-box p-0">
+                {{-- Modal Header --}}
+                <div class="w-full px-3 py-2 text-center border-b border-gray-200">
+                    {{-- <h1 class="text-2xl">Create Post</h1> --}}
+                    <h1 class="text-xl">Move to Archive</h1>
+                </div>
+                <form method="POST" :action="`/pawis/${form.id}`">
+                    @csrf
+                    @method('PATCH')
+        
+                    {{-- Modal body --}}
+                    <div class="p-3">
+                        This thought will be hidden from your feed and saved in Archive. You can restore it anytime.
+                    </div>
+                    {{-- Modal footer --}}
+                    <div class="flex justify-end px-3 py-2 border-t border-gray-200">
+                        <button type="button"
+                            class="px-3 py-2 rounded-s-md text-gray-900 shadow bg-neutral text-white hover:bg-neutral/90 cursor-pointer"
+                            onclick="move_to_archive.close()">
+        
+                            Cancel
+        
+                        </button>
+        
+                        <button type="submit"
+                            class="px-3 py-2 bg-error text-white hover:bg-error/90 cursor-pointer rounded-e-md">
+                            Move
+                        </button>
+                    </div>
+                </form>
+        
+        
+                <form method="dialog">
+                    <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-1.5">╳</button>
+                </form>
+            </div>
+        
+            <form method="dialog" class="modal-backdrop">
+                <button>close</button>
+            </form>
+        </dialog>
     </div>
 </x-layout>
